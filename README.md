@@ -1,2 +1,3 @@
 # udacityFENDprojects
-udacity frontend Advanced P5 Arcade Game Clone
+udacity frontend Advanced projects
+P5: Arcade Game Clone
