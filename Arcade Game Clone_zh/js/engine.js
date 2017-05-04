@@ -1,5 +1,5 @@
 /* Engine.js
-* 这个文件提供了游戏循环玩耍的功能（更新敌人和渲染）
+ * 这个文件提供了游戏循环玩耍的功能（更新敌人和渲染）
  * 在屏幕上画出出事的游戏面板，然后调用玩家和敌人对象的 update / render 函数（在 app.js 中定义的）
  *
  * 一个游戏引擎的工作过程就是不停的绘制整个游戏屏幕，和小时候你们做的 flipbook 有点像。当
@@ -41,7 +41,7 @@ var Engine = (function(global) {
 		let end = update(dt);
 		render();
 		if(end) {
-			return reset();
+			return reset(end);
 		}
 
 		/* 设置我们的 lastTime 变量，它会被用来决定 main 函数下次被调用的事件。 */
@@ -68,9 +68,12 @@ var Engine = (function(global) {
 	 * 注释了，你可以在这里实现，也可以在 app.js 对应的角色类里面实现。
 	 */
 	function update(dt) {
-		updateEntities(dt);
+		let isWin = updateEntities(dt);
+		if(isWin) {
+			return 'win';
+		}
 		// checkCollisions();
-		return allEnemies.some(enemy => enemy.y + 10 === player.y && Math.abs(enemy.x - player.x) < 81);
+		return allEnemies.some(enemy => enemy.y === player.y && Math.abs(enemy.x - player.x) < 81);
 	}
 
 	/* 这个函数会遍历在 app.js 定义的存放所有敌人实例的数组，并且调用他们的 update()
@@ -81,7 +84,7 @@ var Engine = (function(global) {
 		allEnemies.forEach(function(enemy) {
 			enemy.update(dt);
 		});
-		player.update();
+		return player.update();
 	}
 
 	/* 这个函数做了一些游戏的初始渲染，然后调用 renderEntities 函数。记住，这个函数
@@ -133,8 +136,42 @@ var Engine = (function(global) {
 	 * 从新开始游戏的按钮，也可以是一个游戏结束的画面，或者其它类似的设计。它只会被 init()
 	 * 函数调用一次。
 	 */
-	function reset() {
+	function reset(end) {
 		// 空操作
+		let img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		let imgData = img.data;
+		if(end === 'win') {
+			// canvas.width=canvas.width;
+			for(let i = imgData.length / 4 - 1; 0 <= i; i--) {
+				imgData[i * 4 + 3] = 127;
+			}
+			ctx.putImageData(img, 0, 0);
+			ctx.font = '72pt Impact';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'white';
+			ctx.fillText('You Win!', canvas.width / 2, canvas.height / 2);
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = 3;
+			ctx.strokeText('You Win!', canvas.width / 2, canvas.height / 2);
+			// setTimeout(main,0);
+		} else if(end) {
+			console.log(img);
+			let r, g, b;
+			for(let i = imgData.length / 4 - 1; 0 <= i; i--) {
+				let gray = (imgData[i * 4 + 0] + imgData[i * 4 + 1] + imgData[i * 4 + 2]) / 3;
+				imgData[i * 4 + 0] = gray;
+				imgData[i * 4 + 1] = gray;
+				imgData[i * 4 + 2] = gray;
+			}
+			ctx.putImageData(img, 0, 0);
+			ctx.font = '72pt Impact';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'white';
+			ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = 3;
+			ctx.strokeText('Game Over!', canvas.width / 2, canvas.height / 2);
+		}
 	}
 
 	/* 紧接着我们来加载我们知道的需要来绘制我们游戏关卡的图片。然后把 init 方法设置为回调函数。
@@ -145,7 +182,19 @@ var Engine = (function(global) {
 		'images/water-block.png',
 		'images/grass-block.png',
 		'images/enemy-bug.png',
-		'images/char-boy.png'
+		'images/char-boy.png',
+		'images/char-cat-girl.png',
+		'images/char-horn-girl.png',
+		'images/char-pink-girl.png',
+		'images/char-princess-girl.png',
+		'images/Gem Blue.png',
+		'images/Gem Green.png',
+		'images/Gem Orange.png',
+		'images/Heart.png',
+		'images/Key.png',
+		'images/Rock.png',
+		'images/Selector.png',
+		'images/Star.png'
 	]);
 	Resources.onReady(init);
 
