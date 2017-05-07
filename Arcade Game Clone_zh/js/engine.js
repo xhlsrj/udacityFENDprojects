@@ -37,7 +37,7 @@ var Engine = (function(global) {
 		/* 调用我们的 update / render 函数， 传递事件间隙给 update 函数因为这样
 		 * 可以使动画更加顺畅。
 		 */
-		//		update(dt);
+		// update(dt);
 		let end = update(dt);
 		render();
 		if(end) {
@@ -141,36 +141,68 @@ var Engine = (function(global) {
 		let img = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		let imgData = img.data;
 		if(end === 'win') {
-			// canvas.width=canvas.width;
 			for(let i = imgData.length / 4 - 1; 0 <= i; i--) {
-				imgData[i * 4 + 3] = 127;
+				if(imgData[i * 4] + imgData[i * 4 + 1] + imgData[i * 4 + 2] !== 0) {
+					imgData[i * 4 + 3] = 127;
+				}
 			}
 			ctx.putImageData(img, 0, 0);
+			ctx.fillStyle = 'white';
 			ctx.font = '72pt Impact';
 			ctx.textAlign = 'center';
-			ctx.fillStyle = 'white';
 			ctx.fillText('You Win!', canvas.width / 2, canvas.height / 2);
 			ctx.strokeStyle = 'black';
 			ctx.lineWidth = 3;
 			ctx.strokeText('You Win!', canvas.width / 2, canvas.height / 2);
-			// setTimeout(main,0);
 		} else if(end) {
-			console.log(img);
+			player.HP--;
 			let r, g, b;
 			for(let i = imgData.length / 4 - 1; 0 <= i; i--) {
 				let gray = (imgData[i * 4 + 0] + imgData[i * 4 + 1] + imgData[i * 4 + 2]) / 3;
-				imgData[i * 4 + 0] = gray;
+				imgData[i * 4] = gray;
 				imgData[i * 4 + 1] = gray;
 				imgData[i * 4 + 2] = gray;
 			}
 			ctx.putImageData(img, 0, 0);
-			ctx.font = '72pt Impact';
-			ctx.textAlign = 'center';
-			ctx.fillStyle = 'white';
-			ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
-			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 3;
-			ctx.strokeText('Game Over!', canvas.width / 2, canvas.height / 2);
+			if(player.HP === 0) {
+				ctx.font = '72pt Impact';
+				ctx.textAlign = 'center';
+				ctx.fillStyle = 'white';
+				ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
+				ctx.strokeStyle = 'black';
+				ctx.lineWidth = 3;
+				ctx.strokeText('Game Over!', canvas.width / 2, canvas.height / 2);
+			} else {
+				ctx.fillStyle = 'black';
+				ctx.fillRect(0, 215, canvas.width, 240);
+				ctx.drawImage(Resources.get(player.sprite), 101, 229);
+				ctx.drawImage(Resources.get('images/Heart.png'), 202, 229);
+
+				function minusHP(x) {
+					setTimeout(function() {
+						ctx.fillRect(x, 229, 101, 171);
+					}, 500, x);
+					setTimeout(function(x) {
+						ctx.drawImage(Resources.get('images/Heart.png'), x, 229);
+					}, 1000, x);
+					setTimeout(function(x) {
+						ctx.fillRect(x, 229, 101, 171);
+					}, 1500, x);
+				}
+				if(player.HP === 2) {
+					ctx.drawImage(Resources.get('images/Heart.png'), 303, 229);
+					ctx.drawImage(Resources.get('images/Heart.png'), 404, 229);
+					minusHP(404);
+				} else {
+					ctx.drawImage(Resources.get('images/Heart.png'), 303, 229);
+					minusHP(303);
+				}
+				setTimeout(function() {
+					player.x = 202;
+					player.y = 395;
+					init();
+				}, 3000);
+			}
 		}
 	}
 

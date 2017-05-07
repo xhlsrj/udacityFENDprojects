@@ -1,15 +1,14 @@
 // 这是我们的玩家要躲避的敌人 
-var Enemy = function(row, col) {
+var Enemy = function(x, offsetX, y, speed) {
 	// 要应用到每个敌人的实例的变量写在这里
 	// 我们已经提供了一个来帮助你实现更多
 
 	// 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
 	this.sprite = 'images/enemy-bug.png';
-	this.INITX = ~~(Math.random() * 3) ? 303 - col * (202 + row * 101) : 202 - col * (202 + row * 101);
-	this.OFFSETX = 909 + row * 404; // 4 * (202 + row * 101) + 101;
-	this.x = this.INITX;
-	this.y = row * 83 + 63;
-	this.speed = 50 + 101 / (row + 1);
+	this.x = x;
+	this.OFFSET_X = offsetX;
+	this.y = y;
+	this.speed = speed;
 };
 
 // 此为游戏必须的函数，用来更新敌人的位置
@@ -20,7 +19,7 @@ Enemy.prototype.update = function(dt) {
 	if(this.x < 505) {
 		this.x += this.speed * dt;
 	} else {
-		this.x -= this.OFFSETX;
+		this.x += this.OFFSET_X;
 	}
 };
 
@@ -36,6 +35,7 @@ var Play = function() {
 	this.sprite = 'images/char-cat-girl.png';
 	this.x = 202;
 	this.y = 395;
+	this.HP = 3;
 	// this.width = 101;
 	// this.orignHeight = 171;
 	// this.offsetHeight = -88;
@@ -51,31 +51,30 @@ Play.prototype.update = function() {
 Play.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-// Play.prototype.handleInput = function(keyCode) {
-// 	switch(keyCode) {
-// 		case 'left':
-// 			if(this.x !== 0) {
-// 				this.x -= this.width;
-// 			}
-// 			break;
-// 		case 'up':
-// 			if(this.y !== this.offsetY) {
-// 				this.y -= this.height;
-// 			}
-// 			break;
-// 		case 'right':
-// 			if(this.x !== this.width * 4) {
-// 				this.x += this.width;
-// 			}
-// 			break;
-// 		case 'down':
-// 			if(this.y !== this.height * 5 + this.offsetY) {
-// 				this.y += this.height;
-// 			}
-// 			break;
-// 	}
-// }
+
 Play.prototype.handleInput = function(keyCode) {
+	// 	switch(keyCode) {
+	// 		case 'left':
+	// 			if(this.x !== 0) {
+	// 				this.x -= this.width;
+	// 			}
+	// 			break;
+	// 		case 'up':
+	// 			if(this.y !== this.offsetY) {
+	// 				this.y -= this.height;
+	// 			}
+	// 			break;
+	// 		case 'right':
+	// 			if(this.x !== this.width * 4) {
+	// 				this.x += this.width;
+	// 			}
+	// 			break;
+	// 		case 'down':
+	// 			if(this.y !== this.height * 5 + this.offsetY) {
+	// 				this.y += this.height;
+	// 			}
+	// 			break;
+	// 	}
 	switch(keyCode) {
 		case 'left':
 			if(this.x !== 0) {
@@ -106,7 +105,17 @@ function createEnemies(row, col) {
 	let arr = [];
 	for(let i = 0; i < row; i++) {
 		for(let j = 0; j < col; j++) {
-			arr[i * col + j] = new Enemy(i, j);
+			// depending upon the row to set the least space between two bugs in the row group
+			let space = 202 + i * 101;
+			// initialize the position of x-axis by two thirds of weight to least space and rest to a wider space
+			let x = ~~(Math.random() * 3) ? 303 - j * space : 202 - j * space;
+			// set offset of x-axis to be set to the bug when it runs out off the right range
+			let offsetX = -(909 + i * 404);
+			// initialize the position of y-axis
+			let y = i * 83 + 63;
+			// initialize the speed
+			let speed = 50 + 101 / (i + 1);
+			arr[i * col + j] = new Enemy(x, offsetX, y, speed);
 		}
 	}
 	return arr;
