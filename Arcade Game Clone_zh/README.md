@@ -5,9 +5,10 @@ Downloads this folder and open "index.html" file with your brower which supports
 ### How to play
 Use "up", "right", "down" and "left" to move your role to reach the river(the top side).
 Do not touch any bug. And your role has just three lives.
+While the game is over, you can click the "Play Again" to play it again.
 
 ### Note
-You can reload the page to start a new game.
+Of course you can reload the page to start a new little different game anytime.
 
 
 

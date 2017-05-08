@@ -1,3 +1,4 @@
+'use strict';
 /* Engine.js
  * 这个文件提供了游戏循环玩耍的功能（更新敌人和渲染）
  * 在屏幕上画出出事的游戏面板，然后调用玩家和敌人对象的 update / render 函数（在 app.js 中定义的）
@@ -20,6 +21,7 @@ var Engine = (function(global) {
 		canvas = doc.createElement('canvas'),
 		ctx = canvas.getContext('2d'),
 		lastTime;
+	window.playAgain = false;
 
 	canvas.width = 505;
 	canvas.height = 606;
@@ -57,9 +59,46 @@ var Engine = (function(global) {
 	 * 做一次就够了
 	 */
 	function init() {
+		canvas.addEventListener('mousemove', function(e) {
+			if(window.playAgain) {
+				let img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				ctx.font = 'bolder 24pt Digifit';
+				ctx.lineWidth = 2;
+				if(192 < e.offsetX && e.offsetX < 404 && 343 < e.offsetY && e.offsetY < 394) {
+					canvas.style.cursor = 'pointer';
+					drawPlayAgain('orange', 'yellow');
+				} else {
+					canvas.style.cursor = '';
+					drawPlayAgain('gray','white');
+				}
+				ctx.fillText('Play Again', canvas.width / 2 + 48, canvas.height / 2 + 72);
+				ctx.strokeText('Play Again', canvas.width / 2 + 48, canvas.height / 2 + 72);
+			}
+		});
+		canvas.addEventListener('mouseup', function(e) {
+			if(window.playAgain && canvas.style.cursor === 'pointer') {
+				window.playAgain = false;
+				canvas.style.cursor = '';
+				canvas.width = canvas.width;
+				player.x = 202;
+				player.y = 395;
+				player.HP = 3;
+				lastTime = Date.now();
+				main();
+			}
+		});
 		reset();
 		lastTime = Date.now();
 		main();
+	}
+
+	function drawPlayAgain(fillStyle, strokeStyle) {
+		ctx.font = 'bolder 24pt Digifit';
+		ctx.lineWidth = 2;
+		ctx.fillStyle = fillStyle;
+		ctx.strokeStyle = strokeStyle;
+		ctx.fillText('Play Again', canvas.width / 2 + 48, canvas.height / 2 + 72);
+		ctx.strokeText('Play Again', canvas.width / 2 + 48, canvas.height / 2 + 72);
 	}
 
 	/* 这个函数被 main 函数（我们的游戏主循环）调用，它本身调用所有的需要更新游戏角色
@@ -141,6 +180,7 @@ var Engine = (function(global) {
 		let img = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		let imgData = img.data;
 		if(end === 'win') {
+			window.playAgain = true;
 			for(let i = imgData.length / 4 - 1; 0 <= i; i--) {
 				if(imgData[i * 4] + imgData[i * 4 + 1] + imgData[i * 4 + 2] !== 0) {
 					imgData[i * 4 + 3] = 127;
@@ -154,6 +194,7 @@ var Engine = (function(global) {
 			ctx.strokeStyle = 'black';
 			ctx.lineWidth = 3;
 			ctx.strokeText('You Win!', canvas.width / 2, canvas.height / 2);
+			drawPlayAgain('gray','white');
 		} else if(end) {
 			player.HP--;
 			let r, g, b;
@@ -165,6 +206,7 @@ var Engine = (function(global) {
 			}
 			ctx.putImageData(img, 0, 0);
 			if(player.HP === 0) {
+				window.playAgain = true;
 				ctx.font = '72pt Impact';
 				ctx.textAlign = 'center';
 				ctx.fillStyle = 'white';
@@ -172,6 +214,7 @@ var Engine = (function(global) {
 				ctx.strokeStyle = 'black';
 				ctx.lineWidth = 3;
 				ctx.strokeText('Game Over!', canvas.width / 2, canvas.height / 2);
+				drawPlayAgain('gray','white');
 			} else {
 				ctx.fillStyle = 'black';
 				ctx.fillRect(0, 215, canvas.width, 240);
@@ -200,7 +243,8 @@ var Engine = (function(global) {
 				setTimeout(function() {
 					player.x = 202;
 					player.y = 395;
-					init();
+					lastTime = Date.now();
+					main();
 				}, 3000);
 			}
 		}
