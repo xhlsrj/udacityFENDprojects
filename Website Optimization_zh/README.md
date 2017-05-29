@@ -1,13 +1,20 @@
-### To visit the webpage, you can [click here.](https://xhlsrj.github.io/udacityFENDprojects/Website%20Optimization_zh/index.html)
+###  To visit the website of this project offline.
+Download this folder and open "index.html" file in the root folder.
+
+Here is the two webpages optimized on this project.
+* The "index.html" webpage is optimized for CRP.
+* The last link "Cam's Pizzeria" on "index" is to a webpage optimized for 60 FPS.
+
+[A link for visit online.](https://xhlsrj.github.io/udacityFENDprojects/Website%20Optimization_zh/index.html)
 
 #### For index.html
-* Use the sources from PageSpeed Insights to replace original ones.
++ Use the sources from PageSpeed Insights to replace original ones.
 #### For main.js
-+ Remove the events which calls the updatePositions function.
-+ Modify the resizePizzas function.
+- Remove the events which calls the updatePositions function.
+- Modify the resizePizzas function.
 
 
-
+---
 ## 网站性能优化项目
 
 你要做的是尽可能优化这个在线项目的速度。注意，请应用你之前在[网站性能优化课程](https://cn.udacity.com/course/website-performance-optimization--ud884/)中学习的技术来优化关键渲染路径并使这个页面尽可能快的渲染。

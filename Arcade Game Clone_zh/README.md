@@ -1,6 +1,6 @@
 
 ### How to start
-Downloads this folder and open "index.html" file with your brower which supports ECMA-262 6th edition
+Download this folder and open "index.html" file with your brower which supports ECMA-262 6th edition
 
 ### How to play
 Use "up", "right", "down" and "left" to move your role to reach the river(the top side).
