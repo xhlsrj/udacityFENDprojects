@@ -14,8 +14,8 @@ Here is the two webpages optimized on this project.
 - Modify the resizePizzas function.
 
 
----
-## 网站性能优化项目
+
+<!--## 网站性能优化项目
 
 你要做的是尽可能优化这个在线项目的速度。注意，请应用你之前在[网站性能优化课程](https://cn.udacity.com/course/website-performance-optimization--ud884/)中学习的技术来优化关键渲染路径并使这个页面尽可能快的渲染。
 
@@ -71,4 +71,4 @@ Here is the two webpages optimized on this project.
 这个项目基于 Twitter 旗下的 <a href="http://getbootstrap.com/">Bootstrap框架</a> 制作。所有的定制样式都在项目代码库的 `dist/css/portfolio.css` 中。
 
 * <a href="http://getbootstrap.com/css/">Bootstrap CSS</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap组件</a>
+* <a href="http://getbootstrap.com/components/">Bootstrap组件</a>-->
