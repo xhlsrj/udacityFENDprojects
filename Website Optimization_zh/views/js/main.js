@@ -499,44 +499,42 @@ function logAverageFrame(times) {   // times参数是updatePositions()由User Ti
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // 基于滚动条位置移动背景中的披萨滑窗
-// function updatePositions() {
-//   frame++;
-//   window.performance.mark("mark_start_frame");
+function updatePositions() {
+  frame++;
+  window.performance.mark("mark_start_frame");
 
-//   var items = document.getElementsByClassName('.mover');
-//   var phaseParam = document.body.scrollTop / 1250;
-//   for (var i = 0; i < items.length; i++) {
-//     // var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-//     var phase = Math.sin(phaseParam + (i % 5));
-//     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-//   }
+  var items = document.getElementsByClassName('mover');
+  var phaseParam = document.body.scrollTop / 1250;
+  for (var i = 0; i < items.length; i++) {
+    var phase = Math.sin(phaseParam + (i % 5));
+    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  }
 
-//   // 再次使用User Timing API。这很值得学习
-//   // 能够很容易地自定义测量维度
-//   window.performance.mark("mark_end_frame");
-//   window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
-//   if (frame % 10 === 0) {
-//     var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
-//     logAverageFrame(timesToUpdatePosition);
-//   }
-// }
+  // 再次使用User Timing API。这很值得学习
+  // 能够很容易地自定义测量维度
+  window.performance.mark("mark_end_frame");
+  window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
+  if (frame % 10 === 0) {
+    var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
+    logAverageFrame(timesToUpdatePosition);
+  }
+}
 
 // 在页面滚动时运行updatePositions函数
-// window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', updatePositions);
 
 // 当页面加载时生成披萨滑窗
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  var phaseParam = document.body.scrollTop / 1250;
   for (var i = 0; i < 40; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    // elem.basicLeft = (i % cols) * s;
-    elem.style.left = (i % cols) * s + Math.sin(phaseParam + (i % 5)) * 100 + 'px';
+    elem.basicLeft = (i % cols) * s;
+    elem.style.left = elem.basicLeft + 100 * Math.sin(i % 5); + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
   }
