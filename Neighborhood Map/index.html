@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="h100p">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Neighborhood Map</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body class="h100p">
+    <div id="map" class="h100p"></div>
+    <div id="position_list_pane" class="h100p">
+        <div id="filter_block">
+            <label id="filter_lbl">filter</label>
+            <select id="filter" data-bind="options:filter,value:selectedFilter,optionsText:'text',optionsValue:'value'"></select>
+        </div>
+        <div id="position_list">
+            <ul data-bind="foreach:positions">
+                <!-- ko if: filter -->
+                <li data-bind="text:name,attr:{title:name},click:$parent.showInfoWindow"></li>
+                <!-- /ko -->
+            </ul>
+        </div>
+    </div>
+    <script src="js/knockout-3.4.2.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv_T4wJIfo5OYkDzydI8Zgegfs86rfaXU&callback=initMap" async defer></script>
+</body>
+
+</html>
