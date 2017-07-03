@@ -55,13 +55,13 @@ const POSITION_FILTER = {
     'Limelight Avenue Phuket': 2
 };
 
-// function $id(id) {
-//     return document.getElementById(id);
-// }
+function $id(id) {
+    return document.getElementById(id);
+}
 
 function initMap() {
     const Phuket = { lat: 7.9665322, lng: 98.3599288 };
-    window.map = new google.maps.Map(document.getElementById('map'), {
+    window.map = new google.maps.Map($id('map'), {
         center: Phuket,
         zoom: 11,
         mapTypeControl: true,
@@ -154,6 +154,12 @@ function openInfoWindow(markers, marker) {
     marker.setIcon('https://maps.google.com/mapfiles/ms/icons/purple-dot.png');
     // getInfoWindowContent(undefined, marker, infowindow, map);
     pvm.selectedMarker(marker);
+    setTimeout(() => {
+        if (pvm.selectedMarker() !== null) {
+            infowindow.setContent(pvm.selectedMarker().title);
+            infowindow.open(map, pvm.selectedMarker());
+        }
+    }, 3000);
     getInfoWindowContent(null, marker);
     // infowindow.setContent(pvm.infowindowContent());
     // infowindow.open(map, marker);
@@ -181,5 +187,20 @@ function getInfoWindowContent(json, marker) {
         // infowindow.setContent(pvm.infowindowContent());
         infowindow.setContent(str);
         infowindow.open(map, pvm.selectedMarker());
+        pvm.selectedMarker(null);
     }
 }
+
+onload = function() {
+    $id('left_bar_btn').addEventListener('click', function(e) {
+        if (e.target.getAttribute('data-open') === '0') {
+            e.target.setAttribute('data-open', '1');
+            $id('position_list_pane').style.paddingRight = '0px';
+            $id('position_list_pane').style.left = '0px';
+        } else {
+            e.target.setAttribute('data-open', '0');
+            $id('position_list_pane').style.paddingRight = '30px';
+            $id('position_list_pane').style.left = '-220px';
+        }
+    });
+};

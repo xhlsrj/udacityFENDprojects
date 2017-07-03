@@ -11,14 +11,56 @@ h6 {
 }
 
 #position_list_pane {
-    position: fixed;
+    position: absolute;
     top: 0;
     background-color: black;
     color: lightgrey;
-    padding-top: 10px;
+    width: 220px;
+}
+
+#left_bar_btn {
+    display: none;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#left_bar_btn::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    width: 24px;
+    height: 5px;
+    border-top: 3px solid lightgray;
+    border-bottom: 3px solid lightgray;
+}
+
+#left_bar_btn::after {
+    content: '';
+    position: absolute;
+    top: 21px;
+    left: 3px;
+    width: 24px;
+    border-top: 3px solid lightgray;
+}
+
+@media (max-width:768px) and (orientation: landscape),
+(max-width:425px) {
+    #position_list_pane {
+        left: -220px;
+        padding-right: 30px;
+    }
+    #left_bar_btn {
+        display: block;
+    }
 }
 
 #filter_block {
+    position: absolute;
+    top: 30px;
     display: flex;
 }
 
@@ -29,6 +71,13 @@ h6 {
 #filter {
     width: 70%;
     font-size: 16px;
+}
+
+#position_list {
+    position: absolute;
+    top: 60px;
+    height: 75%;
+    overflow: auto;
 }
 
 #position_list ul {
