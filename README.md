@@ -7,8 +7,10 @@ P5: Arcade Game Clone
 
 P6: Website Optimization
 
-[Click here to visit the webpage of this project.](https://xhlsrj.github.io/udacityFENDprojects/Website%20Optimization_zh/index.html)
+[Click here to visit the webpage of project 6.](https://xhlsrj.github.io/udacityFENDprojects/Website%20Optimization_zh/index.html)
 
 P7: Neighborhood Map
 
-P8: Feed Reader Testing
+[Project 7 webpage.](https://xhlsrj.github.io/udacityFENDprojects/Neighborhood%20Map/index.html)
+
+P8: [Feed Reader Testing](https://xhlsrj.github.io/udacityFENDprojects/Feed%20Reader%20Testing_zh/index.html)
