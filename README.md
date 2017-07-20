@@ -13,4 +13,6 @@ P7: Neighborhood Map
 
 [Project 7 webpage.](https://xhlsrj.github.io/udacityFENDprojects/Neighborhood%20Map/index.html)
 
-P8: [Feed Reader Testing](https://xhlsrj.github.io/udacityFENDprojects/Feed%20Reader%20Testing_zh/index.html)
+P8: Feed Reader Testing
+
+[](https://xhlsrj.github.io/udacityFENDprojects/Feed%20Reader%20Testing_zh/index.html)
