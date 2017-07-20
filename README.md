@@ -10,3 +10,5 @@ P6: Website Optimization
 [Click here to visit the webpage of this project.](https://xhlsrj.github.io/udacityFENDprojects/Website%20Optimization_zh/index.html)
 
 P7: Neighborhood Map
+
+P8: Feed Reader Testing
