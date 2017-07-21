@@ -4,6 +4,14 @@ Download this folder and open "index.html" file in the root folder.
 ### Note
 Please make sure that you can visit all the needed requests.
 
+---
+
+### About this project
+some key points
++ "toBeDefined" to test whether the variable is undefined
++ "not.toBe" to test whether the variable is not something
++ for asynchronous operations, callback "done" to test
+
 <!-- # 项目预览
 
 在这个项目中，你会得到一个基于 web 的用来读取 rss 源的应用。最开始的这个项目的开发者意识到了测试的价值，他们也已经把 [Jasmine](http://jasmine.github.io) 包含在了项目之中，而且甚至已经开始写他们第一个测试用例。但是不幸的是，他们决定去创建一个他们自己的公司，所以我们现在拿到的是一个缺乏完整测试用例的应用，这样是你会参与到这个项目的原因。

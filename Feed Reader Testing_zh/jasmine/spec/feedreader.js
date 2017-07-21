@@ -26,14 +26,20 @@ $(function() {
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
         it('have no empty link', function() {
-            allFeeds.forEach((v) => expect(v.url).not.toBe(''));
+            allFeeds.forEach((v) => {
+                expect(v.url).toBeDefined();
+                expect(v.url).not.toBe('');
+            });
         });
 
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
         it('have no empty name', function() {
-            allFeeds.forEach((v) => expect(v.name).not.toBe(''));
+            allFeeds.forEach((v) => {
+                expect(v.name).toBeDefined();
+                expect(v.name).not.toBe('');
+            });
         });
     });
 
@@ -73,9 +79,8 @@ $(function() {
         beforeEach((done) => {
             loadFeed(0, done);
         });
-        it('works', (done) => {
+        it('works', () => {
             expect($('.feed .entry').length).toBeGreaterThan(0);
-            done();
         });
     });
     /* TODO: 写一个叫做 "New Feed Selection" 的测试用例 */
